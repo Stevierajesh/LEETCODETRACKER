@@ -60,6 +60,19 @@ body {
     </form>
   </div>
 
+  <script>
+    document.querySelector('.form-wrapper').addEventListener('submit', function(event) {
+      event.preventDefault(); // prevent default form submission
+  
+      const username = document.getElementById('leetcodeUsername').value.trim();
+      if (username) {
+        localStorage.setItem('leetcodeUsername', username); // ✅ store it
+  
+        // Redirect to the next page (optional)
+        window.location.href = 'joinacluster.html'; // Change this to your desired URL
+      }
+    });
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
