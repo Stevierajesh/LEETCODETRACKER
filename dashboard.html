@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      font-family: Arial, sans-serif;
+    }
+
+    h1, h3 {
+      text-align: center;
+      margin-top: 20px;
+      color: white;
+    }
+
+    .progressBar {
+      width: 30%;
+      height: 30px;
+      background-color: white;
+      position: relative;
+      margin: 20px auto; /* centers the progress bar horizontally */
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .fill {
+      height: 100%;
+      background-color: limegreen;
+      width: 0%; /* this gets updated with JS */
+      transition: width 0.4s ease-in-out;
+    }
+
+    .percent {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      top: 50%;
+      transform: translateY(-50%);
+      color: black;
+      font-weight: bold;
+    }
+    .dashboard {
+    display: flex;
+    gap: 40px; /* spacing between the two columns */
+    height: 100%;
+    padding: 20px;
+    justify-content: center;
+    align-items: flex-start;
+
+  }
+  .user-card {
+    background-color: #2e2e2e;
+    color: white;
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .user-card span {
+    flex: 1;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .user-card span.username {
+    text-align: left;
+    font-weight: bold;
+  }
+  .leaderboardContainer,
+  .recentProblemsContainer {
+    background-color: #1e1e1e;
+    padding: 15px;
+    border-radius: 8px;
+    width: 100%;
+    height: 70vh;
+    color: white;
+    max-height: 600px;     /* ✅ limit height */
+    overflow-y: auto;
+  }
+  .recentProblemCard {
+    background-color: #2c2c2c;
+    border-radius: 8px;
+    padding: 12px 18px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+  .problemName {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ffffff;
+  }
+
+  .problemPoints {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #4ade80; /* green for points */
+  }
+
+  .Days {
+  font-weight: bold;
+  background: linear-gradient(80deg, #99f21e, #783ae8, #8d4724, #f86d27, #4236b4);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-animation 2s ease infinite;
+}
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@media (max-width: 768px) {
+  .dashboard {
+    flex-direction: column;
+    align-items: center;
+  }
+  .progressBar{
+    width: 60%;
+  }
+  .leaderboardContainer,
+  .recentProblemsContainer {
+    width: 90%; /* fit screen width nicely */
+    margin-bottom: 5px;
+    max-height: 400px;
+  }
+}
+  </style>
+</head>
+<body>
+  <h1>Competition Dashboard</h1>
+  <h3 style="background-color: rgb(58, 57, 57);">CLUSTERNAME - #CLU34782</h3>
+
+  <div style="text-align: center; margin-top: 20px;">
+    <a class="Days" style="color: white; font-size: 3rem;">90</a>
+    <a style="color: white;">Days Left</a>
+  </div>
+  
+
+
+    <div class="progressBar">
+        <div class="fill" id="fillBar"></div>
+        <div class="percent" id="percentLabel">0%</div>
+    </div>
+
+    <div class="dashboard">
+        <div class="leaderboardContainer">
+            <h3>LEADERBOARD</h3>
+            <div class="leaderboard">
+                <div class="user-card">
+                    <span class="username">Stevie Rajesh</span>
+                    <span>42 Problems</span>
+                    <span>420 Points</span>
+                  </div>
+            </div>
+        </div>
+    
+        <div class="recentProblemsContainer">
+            <h3>Recent Problems</h3>
+            <div class="recentProblems">
+                <div class="recentProblemCard">
+                    <span class="problemName">Two Sum</span>
+                    <span class="problemPoints">10 pts</span>
+                  </div>
+            </div>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: center; margin-top: 20px;">
+        <button onclick="window.location.href='index.html'" 
+          style="padding: 10px 20px; font-size: 1rem; background-color: #e70505; color: white; border: none; border-radius: 5px; cursor: pointer;">
+          Exit to Home
+        </button>
+      </div>
+      <br>
+    <script>
+        // Change this to update progress
+        const startDate = new Date("2025-04-30");
+        const endDate = new Date("2025-08-25");
+        const now = new Date();
+
+// Ensure progress doesn't go below 0 or above 100
+    const totalDuration = endDate - startDate;
+    const elapsed = Math.max(0, Math.min(now - startDate, totalDuration));
+    const percent = Math.round((elapsed / totalDuration) * 100);
+    
+
+    document.getElementById('fillBar').style.width = percent + "%";
+    document.getElementById('percentLabel').innerText = `${percent}% of the way there!`;
+
+    const msPerDay = 1000 * 60 * 60 * 24;
+    const daysLeft = Math.max(0, Math.ceil((endDate - now) / msPerDay));
+
+// Update the .Days element
+    document.querySelector('.Days').innerText = daysLeft;
+  </script>
+</body>
+</html>

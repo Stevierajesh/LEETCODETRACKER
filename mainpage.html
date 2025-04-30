@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New User</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      width: 100%;
+      min-height: 100vh;
+      padding: 0 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      background: linear-gradient(214deg, #003153 0%, #1B1B1B 74%);
+      background-size: 180% 180%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      animation: gradient-animation 18s ease infinite;
+      color: white;
+      text-align: center;
+    }
+
+    @keyframes gradient-animation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .top-heading {
+      margin-top: 200px;
+    }
+
+    .explanation {
+      max-width: 700px;
+      margin: 50px auto 20px auto;
+      padding: 0 15px;
+    }
+
+    .button-wrapper {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="top-heading">Stevie's Leetcode Tracker.</h1>
+
+  <div class="explanation">
+    <p>
+      This is an alpha version of a Leetcode Competition Tracker I developed to create competition between friends.<br>
+      None of the features are fully finished, nor the frontend fully finished.<br><br>
+      If you are a UX designer, reach out to me on LinkedIn lol. — 
+      <a href="https://www.linkedin.com/in/stevie-rajesh-627058230" target="_blank">Stevie Rajesh</a>
+    </p>
+  </div>
+
+  <div class="button-wrapper">
+    <button onclick="window.location.href='login.html';" class="btn btn-primary">Login</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

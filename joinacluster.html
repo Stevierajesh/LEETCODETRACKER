@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New User</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      width: 100%;
+      min-height: 100vh;
+      padding: 0 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-color: #003153;
+      background-image: linear-gradient(214deg, #003153 0%, #1B1B1B 74%);
+      animation: gradient-animation 18s ease infinite;
+      color: white;
+    }
+
+    .form-container {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .form-wrapper {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .top-heading {
+      position: absolute;
+      top: 144px;
+      width: 100%;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="top-heading">Join A Cluster</h1>
+
+  <div class="container form-container">
+    <form class="form-wrapper">
+      <div class="mb-3">
+        <label for="leetcodeUsername" class="form-label text-center d-block">
+          Your Friend Should Have Sent You a Code
+        </label>
+        <br>
+        <input type="text" class="form-control" id="leetcodeUsername" placeholder="Enter your code" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Submit</button>
+
+      <!-- Red warning text below the form -->
+      <div class="text-center mt-3">
+        <p style="color: red; font-weight: bold;">*Creating a cluster is not supported yet</p>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
