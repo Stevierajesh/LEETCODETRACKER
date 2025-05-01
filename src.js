@@ -5,6 +5,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/fireba
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics.js";
 import { getAuth, signInWithPopup, getRedirectResult, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 import { getAdditionalUserInfo } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { setAuthToken } from './security.js';
 // Your Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCYUEYIp-ru7WFWm9Ji1V2OEYxNoaMrooA",
@@ -39,21 +40,29 @@ getRedirectResult(auth)
   });
 
 // Function to trigger sign-in on button click
-export function signInWithGoogle() {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const info = getAdditionalUserInfo(result);
-      if (info.isNewUser) {
-        window.location.href = "newuser.html";   // redirect new users
-      } else {
-        window.location.href = "dashboard.html";      // redirect returning users
-      }
-    })
-    .catch((error) => {
-      console.error("Google sign-in error:", error);
-      alert("Failed to sign in with Google.");
-    });
+export async function signInWithGoogle() {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+    const info = getAdditionalUserInfo(result);
+
+    const token = await user.getIdToken();
+    setAuthToken(token);
+
+    const email = user.email;
+    localStorage.setItem("userEmail", email);
+
+    if (info.isNewUser) {
+      window.location.href = "newuser.html";
+    } else {
+      window.location.href = "choices.html";
+    }
+  } catch (error) {
+    console.error("Google sign-in error:", error);
+    alert("Failed to sign in with Google.");
   }
+}
+
 
 document.getElementById('googleSignInBtn').addEventListener('click', () => {
     console.log('Google Sign-In button clicked!');

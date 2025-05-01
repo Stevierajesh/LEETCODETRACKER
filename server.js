@@ -5,6 +5,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/fireba
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics.js";
 import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 import { set } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 // import { getAuth, signInWithPopup, getRedirectResult, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 // import { getAdditionalUserInfo } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 // Your Firebase config
@@ -41,14 +43,50 @@ document.querySelector('.form-wrapper').addEventListener('submit', async functio
             alert("Username missing. Please go back and enter your LeetCode username.");
         return;
         }
+        const email = localStorage.getItem("userEmail");
+        if (email) {
+          console.log("User's email:", email);
+        } else {
+          alert("Email not found. Please go back and sign in again.");
+        }
 
         const userRef = child(dbRef, `clusters/${clusterCode}/Users/${username}`);
         await set(userRef, {
-            NumOfProblems: 0,
-            Points: 0
+            Points: 0,
+            Email: email,
+            problems: {
+              problem: {
+                title: "INITIAL",
+                points: 0,
+                link: "https://leetcode.com/problems/initial",
+              }
+            },
+            Allproblems: {
+              title: "INITIAL",
+            }
         });
 
-        window.location.href = 'dashboard.html';
+        
+
+        const auth = getAuth();
+        onAuthStateChanged(auth, async (user) => {
+          if (user) {
+            const uid = user.uid;
+            const leetcodeUsername = localStorage.getItem('leetcodeUsername');
+            await set(ref(db, `Accounts/${uid}`), {
+              email: user.email,
+              leetcodeUsername: leetcodeUsername,
+              clusters: {
+                [clusterCode]: true
+              }
+            });
+        
+            window.location.href = 'dashboard.html';
+          } else {
+            alert("Not signed in. Please sign in again.");
+            window.location.href = 'login.html';
+          }
+        });
       } else {
         alert("Cluster not found. Please check the code.");
       }
