@@ -9,22 +9,5 @@
   <input id="username" placeholder="Enter LeetCode username">
   <button onclick="checkStats()">Check</button>
   <pre id="output"></pre>
-
-  <script type="module">
-    import { fetchLeetCodeStats } from './leetCodeEngine.js';
-
-    window.checkStats = async function() {
-      const username = document.getElementById('username').value.trim();
-      const output = document.getElementById('output');
-      output.innerText = "Fetching...";
-
-      try {
-        const stats = await fetchLeetCodeStats(username);
-        output.innerText = JSON.stringify(stats, null, 2);
-      } catch (err) {
-        output.innerText = `Error: ${err.message}`;
-      }
-    };
-  </script>
 </body>
 </html>
