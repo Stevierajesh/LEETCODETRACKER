@@ -9,5 +9,27 @@
   <input id="username" placeholder="Enter LeetCode username">
   <button onclick="checkStats()">Check</button>
   <pre id="output"></pre>
+
+  <script>
+    async function checkStats() {
+      const username = document.getElementById('username').value.trim();
+      const output = document.getElementById('output');
+
+      if (!username) {
+        output.innerText = "Please enter a username.";
+        return;
+      }
+
+      output.innerText = "Fetching...";
+
+      try {
+        const response = await fetch(`http://leetcode2-env.eba-azvmz4zt.us-east-1.elasticbeanstalk.com/${username}`);
+        const data = await response.json();
+        output.innerText = JSON.stringify(data, null, 2);
+      } catch (err) {
+        output.innerText = "Error fetching data: " + err.message;
+      }
+    }
+  </script>
 </body>
 </html>

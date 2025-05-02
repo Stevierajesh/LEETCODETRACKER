@@ -56,9 +56,22 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+.join-btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #0527e7;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
 .exit-btn:hover {
   background-color: #c60000;
+}
+.join-btn:hover {
+  background-color: #25015f;
 }
 
     @media (max-width: 600px) {
@@ -81,6 +94,11 @@
     <!-- More clusters will be appended here -->
   </div>
 
+  <div style="margin-top: 20px; text-align: center;">
+    <button onclick="window.location.href='newuser.html'" class="join-btn">
+      Join A Cluster
+    </button>
+  </div>
 
   <div style="margin-top: 20px; text-align: center;">
     <button onclick="window.location.href='index.html'" class="exit-btn">

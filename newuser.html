@@ -60,17 +60,29 @@ body {
     </form>
   </div>
 
-  <script>
-    document.querySelector('.form-wrapper').addEventListener('submit', function(event) {
+  <script type="module">
+    import { doesLeetCodeUserExist } from './leetCodeEngine.js';
+
+    document.querySelector('.form-wrapper').addEventListener('submit', async function(event) {
       event.preventDefault(); // prevent default form submission
-  
+
       const username = document.getElementById('leetcodeUsername').value.trim();
-      if (username) {
+
+      const valid = await doesLeetCodeUserExist(username); // ✅ fix: use the correct variable
+
+      if (!valid) {
+        alert("That LeetCode username does not exist.");
+        return;
+      } else{
+        if (username) {
         localStorage.setItem('leetcodeUsername', username); // ✅ store it
-  
-        // Redirect to the next page (optional)
-        window.location.href = 'joinacluster.html'; // Change this to your desired URL
+
+        // Redirect to the next page
+        window.location.href = 'joinacluster.html';
       }
+      }
+
+
     });
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

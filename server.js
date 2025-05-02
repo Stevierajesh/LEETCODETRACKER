@@ -7,6 +7,7 @@ import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs
 import { set } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { getAcceptedProblemTitles } from './leetCodeEngine.js';
 // import { getAuth, signInWithPopup, getRedirectResult, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 // import { getAdditionalUserInfo } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 // Your Firebase config
@@ -39,6 +40,15 @@ document.querySelector('.form-wrapper').addEventListener('submit', async functio
         localStorage.setItem('clusterCode', clusterCode);
 
         const username = localStorage.getItem('leetcodeUsername');
+
+        //leetcode username inital search
+
+        const acceptedTitles = await getAcceptedProblemTitles(username);
+        const allProblems = {};
+        acceptedTitles.forEach(title => {
+          allProblems[title] = true;
+        });
+        
         if (!username) {
             alert("Username missing. Please go back and enter your LeetCode username.");
         return;
@@ -61,9 +71,7 @@ document.querySelector('.form-wrapper').addEventListener('submit', async functio
                 link: "https://leetcode.com/problems/initial",
               }
             },
-            Allproblems: {
-              title: "INITIAL",
-            }
+            Allproblems: allProblems
         });
 
         
