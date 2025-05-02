@@ -62,15 +62,10 @@ document.querySelector('.form-wrapper').addEventListener('submit', async functio
 
         const userRef = child(dbRef, `clusters/${clusterCode}/Users/${username}`);
         await set(userRef, {
+            NumOfProblems:0,
             Points: 0,
             Email: email,
-            problems: {
-              problem: {
-                title: "INITIAL",
-                points: 0,
-                link: "https://leetcode.com/problems/initial",
-              }
-            },
+            problems: {},
             Allproblems: allProblems
         });
 

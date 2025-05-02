@@ -1,98 +1,23 @@
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { db } from './firebaseinit.js';  // ✅ import initialized database
+import { ref, get, child, set } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 import { getNewAcceptedProblemsWithPoints } from './leetCodeEngine.js';
-const clusterCode = localStorage.getItem("clusterCode");
-if (clusterCode) {
-  document.querySelector(".clust").innerHTML = `CLUSTERNAME - #${clusterCode}`;
-}
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCYUEYIp-ru7WFWm9Ji1V2OEYxNoaMrooA",
-  authDomain: "leetcode-e1299.firebaseapp.com",
-  databaseURL: "https://leetcode-e1299-default-rtdb.firebaseio.com",
-  projectId: "leetcode-e1299",
-  storageBucket: "leetcode-e1299.appspot.com",
-  messagingSenderId: "117262107016",
-  appId: "1:117262107016:web:1f0c093f354392bfa67a3d"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const auth = getAuth();
-
-const leaderboardDiv = document.querySelector('.leaderboard');
-
-onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    window.location.href = 'login.html';
-    return;
-  }
-
-  try {
-    const usersRef = ref(db, `clusters/${clusterCode}/Users`);
-    const snapshot = await get(usersRef);
-
-    if (snapshot.exists()) {
-      const users = snapshot.val();
-
-      Object.keys(users).forEach(username => {
-        const userData = users[username];
-        const problems = userData.NumOfProblems ?? 0;
-        const points = userData.Points ?? 0;
-
-        const card = document.createElement("div");
-        card.className = "user-card";
-        card.innerHTML = `
-          <span class="username">${username}</span>
-          <span>${problems} Problems</span>
-          <span>${points} Points</span>
-        `;
-        leaderboardDiv.appendChild(card);
-      });
-    } else {
-      leaderboardDiv.innerHTML = "<p>No users found in this cluster.</p>";
-    }
-  } catch (error) {
-    console.error("Error fetching leaderboard:", error);
-    leaderboardDiv.innerHTML = "<p>Failed to load leaderboard.</p>";
-  }
-});
+    apiKey: "AIzaSyCYUEYIp-ru7WFWm9Ji1V2OEYxNoaMrooA",
+    authDomain: "leetcode-e1299.firebaseapp.com",
+    projectId: "leetcode-e1299",
+    storageBucket: "leetcode-e1299.firebasestorage.app",
+    messagingSenderId: "117262107016",
+    appId: "1:117262107016:web:1f0c093f354392bfa67a3d",
+    measurementId: "G-W9K8Z0GWL8"
+  };
 
 
-const recentProblemsDiv = document.querySelector('.recentProblems');
-const recentRef = ref(db, `clusters/${clusterCode}/RecentProblems`);
-
-try {
-const recentSnapshot = await get(recentRef);
-if (recentSnapshot.exists()) {
-  const problems = recentSnapshot.val();
-
-  // Clear placeholder
-  recentProblemsDiv.innerHTML = '';
-
-  Object.keys(problems).forEach(key => {
-    const problem = problems[key];
-    const name = problem.ProblemName ?? "Unknown";
-    const points = problem.ProblemPoints ?? 0;
-
-    const card = document.createElement("div");
-    card.className = "recentProblemCard";
-    card.innerHTML = `
-      <span class="problemName">${name}</span>
-      <span class="problemPoints">${points} pts</span>
-    `;
-    recentProblemsDiv.appendChild(card);
-  });
-} else {
-  recentProblemsDiv.innerHTML = "<p>No recent problems found.</p>";
-}
-} catch (error) {
-console.error("Error fetching recent problems:", error);
-recentProblemsDiv.innerHTML = "<p>Failed to load recent problems.</p>";
-}
+// Initialize Firebase
+//const app = initializeApp(firebaseConfig);
+//const db = getDatabase(app);
+//const analytics = getAnalytics(app);
 
 window.onload = async function () {
     const clusterCode = localStorage.getItem("clusterCode");
@@ -142,7 +67,13 @@ window.onload = async function () {
           // Tally points
           newPoints += problem.points;
         }
-  
+  // 🧮 Update number of problems
+        const problemsSnapshot = await get(child(usersRef, `${username}/problems`));
+        const problemCount = problemsSnapshot.exists()
+        ? Object.keys(problemsSnapshot.val()).length
+        : 0;
+
+        await set(ref(db, `${userRefPath}/NumOfProblems`), problemCount);
         if (newPoints > 0) {
           // Fetch existing points
           const pointsSnapshot = await get(child(usersRef, `${username}/Points`));
