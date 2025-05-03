@@ -35,6 +35,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      color: white;
       /* Add background image */
       background-size: cover; /* Ensure the image covers the entire viewport */
       background-position: center; /* Center the background image */
@@ -60,7 +61,7 @@
     .login_form {
       width: 100%;
       max-width: 435px;
-      background: rgba(110, 110, 110, 0.9); /* Partially transparent gray */
+      background: rgba(0, 0, 0, 0.9); /* Partially transparent gray */
       border-radius: 6px;
       padding: 30px 30px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
@@ -70,7 +71,7 @@
 
     /* Solidify the login form on hover */
     .login_form:hover {
-      background: rgba(110, 110, 110, 1); /* Fully solid gray background */
+      background: rgb(43, 43, 43); /* Fully solid gray background */
       opacity: 1; /* Fully visible */
     }
 
@@ -143,30 +144,15 @@
 <body>
     <div class="login_form">
     <!-- Login form container -->
-    <form id="loginForm">
-      <!-- Error message -->
-      <div class="error" id="errorMessage">Invalid username or password!</div>
-      
-      <!-- Person icon -->
-      <img src="../media/icon.png" alt="User Icon">
-
-      <!-- Username input box -->
-      <div class="input_box">
-        <input type="text" id="username" placeholder="Enter your username" required />
-      </div>
-
-      <!-- Password input box -->
-      <div class="input_box">
-        <input type="password" id="password" placeholder="Enter your password" required />
-      </div>
-
-      <!-- Login button -->
-      <button type="submit">Log In</button>
-
-
-      
-    <div style="text-align: center; font-weight: bold; color: white; margin: 10px 0;">OR</div>
-    </form>
+    <h1 class="top-heading">Stevie's Leetcode Tracker.<br><br></h1>
+    <div class="explanation">
+      <p>
+        This is an alpha version of a Leetcode Competition Tracker I developed to create competition between friends.<br>
+        Only the core features are fully finished, but the frontend is not fully finished.<br><br>
+        If you are a UX designer, reach out to me on LinkedIn lol. — 
+        <a href="https://www.linkedin.com/in/stevie-rajesh-627058230" target="_blank">Stevie Rajesh<br><br></a>
+      </p>
+    </div>
     <div id="googleSignInBtn" style="display: block; margin: 0 auto; text-align: center;">Sign in with Google</div>
     </div>
   </div>

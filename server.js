@@ -25,76 +25,77 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const analytics = getAnalytics(app);
-
+const auth = getAuth();
 //Find Cluster Code
-document.querySelector('.form-wrapper').addEventListener('submit', async function (event) {
-    event.preventDefault();
-  
-    const clusterCode = document.getElementById('leetcodeUsername').value.trim();
-    if (!clusterCode) return;
-  
-    const dbRef = ref(db);
+document.querySelector(".form-wrapper").addEventListener("submit", (evt) => {
+  evt.preventDefault();
+
+  const clusterCode = document
+    .getElementById("leetcodeUsername")
+    .value.trim();
+  if (!clusterCode) return;
+
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      alert("Not signed in");
+      return;
+    }
+
+    console.log("[DEBUG] Auth OK:", user.email);
+
     try {
-      const snapshot = await get(child(dbRef, `clusters/${clusterCode}`));
-      if (snapshot.exists()) {
-        localStorage.setItem('clusterCode', clusterCode);
+      // ─────── 1. does cluster exist? ───────
+      console.log("[DEBUG] get clusters/" + clusterCode);
+      const clusterSnap = await get(
+        child(ref(db), `clusters/${clusterCode}`)
+      );
 
-        const username = localStorage.getItem('leetcodeUsername');
-
-        //leetcode username inital search
-
-        const acceptedTitles = await getAcceptedProblemTitles(username);
-        const allProblems = {};
-        acceptedTitles.forEach(title => {
-          allProblems[title] = true;
-        });
-        
-        if (!username) {
-            alert("Username missing. Please go back and enter your LeetCode username.");
+      if (!clusterSnap.exists()) {
+        alert("Cluster not found");
         return;
-        }
-        const email = localStorage.getItem("userEmail");
-        if (email) {
-          console.log("User's email:", email);
-        } else {
-          alert("Email not found. Please go back and sign in again.");
-        }
-
-        const userRef = child(dbRef, `clusters/${clusterCode}/Users/${username}`);
-        await set(userRef, {
-            NumOfProblems:0,
-            Points: 0,
-            Email: email,
-            problems: {},
-            Allproblems: allProblems
-        });
-
-        
-
-        const auth = getAuth();
-        onAuthStateChanged(auth, async (user) => {
-          if (user) {
-            const uid = user.uid;
-            const leetcodeUsername = localStorage.getItem('leetcodeUsername');
-            await set(ref(db, `Accounts/${uid}`), {
-              email: user.email,
-              leetcodeUsername: leetcodeUsername,
-              clusters: {
-                [clusterCode]: true
-              }
-            });
-        
-            window.location.href = 'dashboard.html';
-          } else {
-            alert("Not signed in. Please sign in again.");
-            window.location.href = 'login.html';
-          }
-        });
-      } else {
-        alert("Cluster not found. Please check the code.");
       }
-    } catch (error) {
-      console.error("Error checking cluster:", error);
-      alert("Something went wrong. Try again later.");
+
+      console.log("[DEBUG] cluster exists");
+
+      // ─────── 2. prepare user payload ───────
+      const username = localStorage.getItem("leetcodeUsername");
+      if (!username) {
+        alert("Missing LeetCode username (localStorage)");
+        return;
+      }
+
+      const accepted = await getAcceptedProblemTitles(username);
+      const allProblems = {};
+      accepted.forEach((t) => (allProblems[t] = true));
+
+      // ─────── 3. write user under cluster ───────
+      const userPath = `clusters/${clusterCode}/Users/${username}`;
+      console.log("[DEBUG] set " + userPath);
+
+      await set(ref(db, userPath), {
+        NumOfProblems: 0,
+        Points: 0,
+        Email: user.email, // use Auth email
+        problems: {},
+        Allproblems: allProblems,
+      });
+
+      console.log("[DEBUG] user node written");
+
+      // ─────── 4. write account summary ───────
+      console.log("[DEBUG] set Accounts/" + user.uid);
+      await set(ref(db, `Accounts/${user.uid}`), {
+        email: user.email,
+        leetcodeUsername: username,
+        clusters: { [clusterCode]: true },
+      });
+
+      console.log("[DEBUG] account node written");
+      window.location.href = "dashboard.html";
+    } catch (err) {
+      // every permission error will end up here with path info printed above
+      console.error("[DEBUG] Firebase op failed", err);
+      alert("Firebase permission error – see console");
     }
   });
+});

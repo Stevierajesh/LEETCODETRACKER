@@ -54,6 +54,12 @@ sortedUsers.forEach(user => {
     <span>${user.problems} Problem(s)</span>
     <span>${user.points} Point(s)</span>
   `;
+
+
+  card.addEventListener("click", () => {
+    window.location.href = `user.html?username=${encodeURIComponent(user.username)}`;
+  });
+
   leaderboardDiv.appendChild(card);
 });
 
@@ -82,13 +88,18 @@ if (recentSnapshot.exists()) {
     const problem = problems[key];
     const name = problem.ProblemName ?? "Unknown";
     const points = problem.ProblemPoints ?? 0;
-
+    const link = problem.link ?? `https://leetcode.com/problems/${name.toLowerCase().replace(/\s+/g, "-")}`;
     const card = document.createElement("div");
     card.className = "recentProblemCard";
     card.innerHTML = `
       <span class="problemName">${name}</span>
       <span class="problemPoints">${points} pts</span>
     `;
+
+    card.style.cursor = "pointer";
+    card.addEventListener("click", () => {
+      window.open(link, "_blank");
+    });
     recentProblemsDiv.appendChild(card);
   });
 } else {
