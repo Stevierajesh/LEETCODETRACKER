@@ -5,7 +5,7 @@ redirectToMaintain(shouldRedirect);
 
 function redirectToMaintain(isTrue) {
     if (isTrue) {
-        window.location.href = "maintain.html";
+        window.location.href = "/maintain.html";
         console.log("Current page:", window.location.pathname);
     }
 }
