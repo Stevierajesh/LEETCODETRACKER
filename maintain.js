@@ -1,6 +1,6 @@
 
 
-let shouldRedirect = false;
+let shouldRedirect = true;
 redirectToMaintain(shouldRedirect);
 
 function redirectToMaintain(isTrue) {
