@@ -23,7 +23,7 @@
       output.innerText = "Fetching...";
 
       try {
-        const response = await fetch(`http://leetcode2-env.eba-azvmz4zt.us-east-1.elasticbeanstalk.com/${username}`);
+        const response = await fetch(`https://lctracker.stevierajesh.com/${username}`);
         const data = await response.json();
         output.innerText = JSON.stringify(data, null, 2);
       } catch (err) {

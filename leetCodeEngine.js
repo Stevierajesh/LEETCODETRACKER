@@ -1,5 +1,5 @@
 export async function getAcceptedProblemTitles(username) {
-    const apiURL = `http://leetcode2-env.eba-azvmz4zt.us-east-1.elasticbeanstalk.com/${username}`;
+    const apiURL = `https://lctracker.stevierajesh.com/${username}`;
     
     try {
         const res = await fetch(apiURL);
@@ -21,7 +21,7 @@ export async function getAcceptedProblemTitles(username) {
 }
 
 export async function getAcceptedProblemsWithPoints(username) {
-    const apiURL = `http://leetcode2-env.eba-azvmz4zt.us-east-1.elasticbeanstalk.com/${username}`;
+    const apiURL = `https://lctracker.stevierajesh.com/${username}`;
     const difficultyMap = {
         Easy: 1,
         Medium: 2,
@@ -57,7 +57,7 @@ export async function getAcceptedProblemsWithPoints(username) {
 }
 export async function doesLeetCodeUserExist(username) {
     try {
-      const res = await fetch(`http://leetcode2-env.eba-azvmz4zt.us-east-1.elasticbeanstalk.com/${username}`);
+      const res = await fetch(`https://lctracker.stevierajesh.com/${username}`);
       const data = await res.json();
   
       // If the response contains an 'errors' array and the key 'matchedUser' is missing/null
@@ -73,7 +73,7 @@ export async function doesLeetCodeUserExist(username) {
   }
 
   export async function getNewAcceptedProblemsWithPoints(username, existingTitles) {
-    const apiURL = `http://leetcode2-env.eba-azvmz4zt.us-east-1.elasticbeanstalk.com/${username}`;
+    const apiURL = `https://lctracker.stevierajesh.com/${username}`;
     const difficultyMap = {
       Easy: 1,
       Medium: 2,
