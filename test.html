@@ -23,12 +23,12 @@
       output.innerText = "Fetching...";
 
       try {
-        const response = await fetch(`https://lctracker.stevierajesh.com/${username}`);
+        const response = await fetch(`https://lctracker.stevierajesh.com/api/${username}`);
         const data = await response.json();
         output.innerText = JSON.stringify(data, null, 2);
       } catch (err) {
         output.innerText = "Error fetching data: " + err.message;
-      }
+      } 
     }
   </script>
   <!-- <script type="module" src="maintain.js"></script> -->
