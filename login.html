@@ -1,164 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login Form</title>
-  
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> <!-- Font Awesome -->
-  <style>
-    /* Google Fonts Link */
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
-    /* Resetting default styling and setting font-family */
-    #googleSignInBtn {
-      display: inline-block;
-      background-color: #4285f4;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-      font-family: 'Roboto', sans-serif;
-    }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Montserrat", sans-serif;
-    }
-
-    body {
-      width: 100%;
-      min-height: 100vh;
-      padding: 0 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      /* Add background image */
-      background-size: cover; /* Ensure the image covers the entire viewport */
-      background-position: center; /* Center the background image */
-      background-repeat: no-repeat; /* Prevent tiling */
-      background-attachment: fixed; /* Keep the image fixed during scrolling */
-      background-color: #003153;
-      background-image: linear-gradient(214deg, #003153 0%, #1B1B1B 74%);
-      animation: gradient-animation 18s ease infinite;
-    }
-    /* @keyframes gradient-animation {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-    } */
-
-    /* Login form styling */
-    .login_form {
-      width: 100%;
-      max-width: 435px;
-      background: rgba(0, 0, 0, 0.9); /* Partially transparent gray */
-      border-radius: 6px;
-      padding: 30px 30px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
-      opacity: 0.999; /* Initial transparency */
-      transition: opacity 0.3s ease, background 0.3s ease; /* Smooth transition */
-    }
-
-    /* Solidify the login form on hover */
-    .login_form:hover {
-      background: rgb(43, 43, 43); /* Fully solid gray background */
-      opacity: 1; /* Fully visible */
-    }
-
-    .login_form img {
-      display: block;
-      margin: 0 auto 20px; /* Center the image */
-      width: 100px; /* Adjust the size */
-      height: auto;
-      opacity: 0.9; /* Make image slightly transparent */
-      transition: opacity 0.3s ease; /* Smooth transition */
-    }
-
-    .login_form:hover img {
-      opacity: 1; /* Fully visible on hover */
-    }
-
-    .error {
-      color: red;
-      text-align: center;
-      margin-bottom: 10px;
-      display: none; /* Initially hidden */
-    }
-
-    /* Input field styling */
-    form .input_box input {
-      width: 100%;
-      height: 50px;
-      border: 1px solid #dadaf2;
-      border-radius: 5px;
-      outline: none;
-      background: rgba(16, 16, 16, 0.9); /* Slight transparency */
-      color: white; /* White text for input fields */
-      font-size: 17px;
-      padding: 0 20px;
-      margin-bottom: 20px;
-      text-align: center; /* Center text inside input box */
-      transition: background 0.3s ease, border-color 0.3s ease;
-    }
-
-    form .input_box input:focus {
-      border-color: #494949; /* Adjusted focus color */
-    }
-
-    form .input_box input::placeholder {
-      color: rgba(255, 255, 255, 0.6); /* White placeholder text with transparency */
-      text-align: center; /* Center placeholder text */
-    }
-
-    /* Login button styling */
-    form button {
-      width: 100%;
-      height: 50px;
-      border-radius: 5px;
-      border: none;
-      background: rgba(62, 62, 62, 0.95); /* Slightly transparent dark gray button */
-      color: #fff;
-      font-size: 18px;
-      font-weight: 500;
-      text-transform: uppercase;
-      cursor: pointer;
-      margin-bottom: 20px;
-      transition: background 0.3s ease, opacity 0.3s ease;
-    }
-
-    form button:hover {
-      background: #2e2e2e; /* Fully solid dark gray */
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Landing Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech&family=Space+Grotesk:wght@300..700&display=swap');
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #161b22 !important;
+            border-bottom: 2px solid #30363d;
+        }
+        .navbar-brand, .nav-link {
+            color: #c9d1d9 !important;
+            font-weight: 500;
+        }
+        .nav-link:hover {
+            color: #58a6ff !important;
+        }
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0d1117, #161b22);
+            text-align: center;
+            padding: 0 1rem;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #58a6ff;
+            margin-bottom: 1rem;
+        }
+        .hero p {
+            font-size: 1.25rem;
+            color: #8b949e;
+            margin-bottom: 2rem;
+        }
+        .btn-primary {
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem;
+            background-color: #238636;
+            border-color: #238636;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #2ea043;
+            border-color: #2ea043;
+        }
+        footer {
+            background-color: #161b22;
+            color: #8b949e;
+            padding: 1rem 0;
+            text-align: center;
+            border-top: 2px solid #30363d;
+        }
+        footer a {
+            color: #58a6ff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        #googleSignInBtn {
+            background-color: #4285F4;
+            color: white;
+        }
+        #googleSignInBtn:hover {
+            background-color: #357AE8;
+            color: white;
+        }
+    .CodeCrasher {
+        font-family: "Space Grotesk", sans-serif;
+  font-weight: bold;
+  background: linear-gradient(80deg, #99f21e, #783ae8, #8d4724, #f86d27, #4236b4);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-animation 2s ease infinite;
+}
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+     border-color: white !important;
+}
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="login_form">
-    <!-- Login form container -->
-    <h1 class="top-heading">Stevie's Leetcode Tracker.<br><br></h1>
-    <div class="explanation">
-      <p>
-        This is an alpha version of a Leetcode Competition Tracker I developed to create competition between friends.<br>
-        Only the core features are fully finished, but the frontend is not fully finished.<br><br>
-        If you are a UX designer, reach out to me on LinkedIn lol. — 
-        <a href="https://www.linkedin.com/in/stevie-rajesh-627058230" target="_blank">Stevie Rajesh<br><br></a>
-      </p>
-    </div>
-    <div id="googleSignInBtn" style="display: block; margin: 0 auto; text-align: center;">Sign in with Google</div>
-    </div>
-  </div>
+    <header class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">CodeCrasher</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="https://github.com/Stevierajesh/LEETCODETRACKER" target="_blank" rel="noopener noreferrer">Github</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://www.linkedin.com/in/stevie-rajesh-627058230" target="_blank" rel="noopener noreferrer">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://leetcode.com" target="_blank" rel="noopener noreferrer">LeetCode</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
 
+    <section class="hero text-center">
+        <div>
+            <h1>Welcome to <a class="CodeCrasher" style="text-decoration: none;">CodeCrasher</a></h1>
+            <p>Practice algorithms, climb leaderboards, and outsolve your friends — one challenge at a time. [[ALPHA]]</p>
+            
+            <div id="googleSignInBtn" class="btn btn-primary" style=" text-align: center;">Sign in with Google</div>
+        </div>
+    </section>
 
-  <script type="module" src="src.js"></script> 
-  <script type="module" src="maintain.js"></script>
+    <footer>
+        <p>&copy; 2025 CodeCrasher. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="src.js"></script> 
+    <script type="module" src="maintain.js"></script>
 </body>
 </html>

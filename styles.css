@@ -1,0 +1,7 @@
+/* Apply a futuristic and minimalist font to the entire website */
+/* Import the Orbitron font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech&family=Space+Grotesk:wght@300..700&display=swap');
+body {
+    font-family: "Space Grotesk", sans-serif;
+}
+
