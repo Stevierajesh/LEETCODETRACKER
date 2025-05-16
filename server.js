@@ -105,7 +105,7 @@ document.querySelector(".form-wrapper").addEventListener("submit", (evt) => {
 
 
       console.log("[DEBUG] account node written");
-      window.location.href = "dashboard.html";
+      window.location.href = "choices.html";
     } catch (err) {
       // every permission error will end up here with path info printed above
       console.error("[DEBUG] Firebase op failed", err);
