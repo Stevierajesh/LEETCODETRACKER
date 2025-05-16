@@ -3,7 +3,7 @@
 // Firebase core setup
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics.js";
-import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { getDatabase, ref, get, child, update } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 import { set } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
@@ -83,12 +83,26 @@ document.querySelector(".form-wrapper").addEventListener("submit", (evt) => {
       console.log("[DEBUG] user node written");
 
       // ─────── 4. write account summary ───────
-      console.log("[DEBUG] set Accounts/" + user.uid);
-      await set(ref(db, `Accounts/${user.uid}`), {
-        email: user.email,
-        leetcodeUsername: username,
-        clusters: { [clusterCode]: true },
-      });
+
+
+      const accountRef = ref(db, `Accounts/${user.uid}`);
+      const snapshot = await get(accountRef);
+
+      if (snapshot.exists()) {
+        // User already exists — only update clusters, don't overwrite
+        const updates = {};
+        updates[`clusters/${clusterCode}`] = true;
+        await update(accountRef, updates);
+        console.log("Cluster added to existing account.");
+      } else {
+        console.log("[DEBUG] set Accounts/" + user.uid);
+        await set(ref(db, `Accounts/${user.uid}`), {
+          email: user.email,
+          leetcodeUsername: username,
+          clusters: { [clusterCode]: true },
+        });
+      }
+
 
       console.log("[DEBUG] account node written");
       window.location.href = "dashboard.html";
